@@ -2,7 +2,7 @@
 
 ## Get started
 
-To run the project, you should have node.js and npm and mongo to be installed.    
+To run the project, you should have `node.js` and `npm` and `mongo` to be installed.    
 Perform next actions in the project folder:   
 
 - `npm install`
@@ -31,7 +31,7 @@ To run tests, perform this action in the project folder:
 
 ## Run project with Docker
 
-To run the project with docker, you should have `docker` and `docker-compose` to be installed.   
+To run the project with Docker, you should have `docker` and `docker-compose` to be installed.   
 Then, execute the following command in the project folder:
 
 - `ENV=local BUILD=1 ./deploy`
@@ -42,6 +42,6 @@ Also, there will be available swagger API documentation by http://localhost:3030
 
 ## Run tests with Docker
 
-To run project with docker, run the following command in the project folder:
+To run tests with Docker, run the following command in the project folder:
 
 - `ENV=test BUILD=1 ./deploy`
