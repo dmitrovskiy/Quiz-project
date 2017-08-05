@@ -40,7 +40,7 @@ It will spin up mongo and api docker containers on your local machine.
 API will be available by http://localhost:3000
 Also, there will be available swagger API documentation by http://localhost:3030
 
-## Run tests with docker
+## Run tests with Docker
 
 To run project with docker, run the following command in the project folder:
 
