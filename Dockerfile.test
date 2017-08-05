@@ -1,0 +1,14 @@
+FROM node:6.10.1-alpine
+
+MAINTAINER Vladimir Dmitrovskiy "dmitrovskiyvl@gmail.com"
+
+WORKDIR /var/www/html
+COPY . /var/www/html
+
+RUN apk add --update \
+    bash && \
+
+    npm install && \
+    npm run build
+
+CMD ["npm", "start"]

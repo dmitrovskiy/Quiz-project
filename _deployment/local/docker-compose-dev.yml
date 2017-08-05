@@ -1,0 +1,30 @@
+version: "2"
+services:
+  api:
+    build: ../../.
+    command: npm run start:dev
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      - DEBUG=app*
+      - NODE_LOG=on
+      - NODE_ENV=production
+      - NODE_HOST=0.0.0.0
+      - NODE_PORT=3000
+      - DATABASE=mongodb://mongo:27017/quiz-project
+    volumes:
+      - ../../:/var/www/html
+    depends_on:
+      - mongo
+  swagger:
+    build: ../../_doc
+    ports:
+      - 3030:80
+    depends_on:
+      - api
+  mongo:
+    image: mongo:3.2.10
+    restart: always
+    volumes:
+      - ./datadb:/data/db

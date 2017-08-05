@@ -1,0 +1,19 @@
+version: "2"
+services:
+  test:
+    build:
+      context: ../../.
+      dockerfile: Dockerfile.test
+    command: ${TEST}
+#    command: npm run coverage
+    environment:
+      - TEST_PATH=${TEST_PATH}
+      - NODE_ENV=production
+      - NODE_HOST=0.0.0.0
+      - NODE_PORT=3000
+      - DATABASE=mongodb://mongo:27017/quiz-project
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:3.2.10
+    restart: always

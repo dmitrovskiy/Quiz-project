@@ -1,0 +1,275 @@
+swagger: '2.0'
+# the domain of the service
+host: %API_HOST%
+info:
+  title: Quiz project  API
+  description: Documentation for Quiz project API
+  version: %API_VERSION%
+# array of all schemes that your API supports
+schemes:
+  - http
+  - https
+# will be prefixed to all paths
+basePath: /
+produces:
+  - application/json
+paths:
+  /:
+    get:
+      summary: Base route
+      description: |
+          Just a base route to check whether api works
+      tags:
+        - Main
+      responses:
+        200:
+          description: Main info
+          schema:
+            $ref: '#/definitions/Main'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+
+  /orders:
+    get:
+      summary: Get order
+      parameters:
+        - name: companyName
+          in: query
+          description: Sort by companyName
+          required: false
+          type: string
+        - name: customerAddress
+          in: query
+          description: Sort by customerAddress
+          required: false
+          type: string
+        - name: $limit
+          in: query
+          description: Max documents that to be returned
+          required: false
+          type: number
+        - name: $skip
+          in: query
+          description: Skip some documents
+          required: false
+          type: number
+        - name: $sort[name]
+          in: query
+          description: |
+            Sort documents. For instance, **$sort[name]=-1** will return sorted data by name, descending.
+            That covers for any field property. I.e. you can use $sort[something]=1 and that will try to sort by this field;
+          required: false
+          type: number
+      tags:
+        - Orders
+      responses:
+        200:
+          description: An array of orders
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Order'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Create an order
+      parameters:
+        - name: order
+          in: body
+          description: A Order to be created
+          required: true
+          schema:
+            $ref: '#/definitions/OperateOrder'
+      tags:
+        - Orders
+      responses:
+        201:
+          description: Data about created order
+          schema:
+            $ref: '#/definitions/Order'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /orders/{orderId}:
+    get:
+      summary: Get specific order
+      parameters:
+        - name: orderId
+          in: path
+          description: order id
+          required: true
+          type: string
+      tags:
+        - Orders
+      responses:
+        200:
+          description: order response
+          schema:
+            $ref: '#/definitions/Order'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Update a order
+      parameters:
+        - name: orderId
+          in: path
+          description: order Id
+          required: true
+          type: string
+        - name: order
+          in: body
+          description: A Order data to be updated
+          required: true
+          schema:
+            $ref: '#/definitions/Order'
+      tags:
+        - Orders
+      responses:
+        200:
+          description: Data about updated order
+          schema:
+            $ref: '#/definitions/Order'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    patch:
+      summary: Partial order update
+      parameters:
+        - name: orderId
+          in: path
+          description: order Id
+          required: true
+          type: string
+        - name: order
+          in: body
+          description: A Order which should be created
+          required: true
+          schema:
+            $ref: '#/definitions/OperateOrder'
+      tags:
+        - Orders
+      responses:
+        200:
+          description: Data about updated order
+          schema:
+            $ref: '#/definitions/Order'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Delete a order
+      parameters:
+        - name: orderId
+          in: path
+          description: order Id
+          required: true
+          type: string
+      tags:
+        - Orders
+      responses:
+        200:
+          description: Response with deleted order
+          schema:
+            $ref: '#/definitions/Order'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /stats/orders/relevance:
+    get:
+      summary: Get order relevance
+      parameters:
+        - name: $sort
+          in: query
+          description: could be `desc` or `asc`. `desc` by default
+          required: false
+          type: string
+      tags:
+        - Stats
+      responses:
+        200:
+          description: |
+            returns info about how often each item has been ordered,
+            in descending order by default
+          schema:
+            $ref: '#/definitions/OrdersRelevance'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+definitions:
+
+  RelevanceItem:
+    type: object
+    properties:
+      _id:
+        type: string
+      frequency:
+        type: number
+
+  OrdersRelevance:
+    type: array
+    items:
+      $ref: '#/definitions/RelevanceItem'
+
+  OperateOrder:
+    type: object
+    properties:
+      companyName:
+        type: string
+      customerAddress:
+        type: string
+      orderedItem:
+        type: string
+
+  Order:
+    type: object
+    properties:
+      id:
+        type: string
+        description: AUTO. Unique identifier
+      createdAt:
+        type: string
+        format: date-time
+        description: AUTO. Date time when an item was created. Creates automatically.
+      updatedAt:
+        type: string
+        format: date-time
+        description: AUTO. Date time when an item was updated. Creates automatically.
+      companyName:
+        type: string
+      customerAddress:
+        type: string
+      orderedItem:
+        type: string
+
+  Main:
+    type: object
+    properties:
+      version:
+        type: string
+      message:
+        type: string
+
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      name:
+        type: string

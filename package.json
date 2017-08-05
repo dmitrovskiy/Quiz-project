@@ -1,16 +1,94 @@
 {
-  "name": "@dutch_oriental/goods-app",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "api-quiz-project",
+  "description": "Quiz Project API",
+  "version": "0.0.0",
+  "main": "src/",
+  "keywords": [
+    "feathers",
+    "quiz",
+    "api"
+  ],
+  "author": {
+    "name": "Vladimir Dmitrovskiy",
+    "email": "dmitrovskiyvl@gmail.com",
+    "url": "https://github.com/dmitrovskiy"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "contributors": [],
+  "bugs": {},
+  "engines": {
+    "node": ">= 6.9.1"
+  },
+  "scripts": {
+    "test": "redrun lint test:any",
+    "test:any": "npm run ava",
+    "test:unit": "npm run ava:unit",
+    "test:integration": "npm run ava:integration",
+    "lint": "eslint --ignore-path .gitignore ./",
+    "coverage": "nyc npm test && nyc report --reporter=text-summary",
+    "ava": "NODE_ENV=${NODE_ENV:-test} TEST_PATH=${TEST_PATH:-'./test/**/*.test.js'} ava -v $TEST_PATH",
+    "ava:unit": "NODE_ENV=${NODE_ENV:-test} TEST_PATH=${TEST_PATH:-'./test/unit/**/*.test.js'} ava -v $TEST_PATH",
+    "ava:integration": "NODE_ENV=${NODE_ENV:-test} TEST_PATH=${TEST_PATH:-'./test/integration/**/*.test.js'} ava -v $TEST_PATH",
+    "start": "node dist/",
+    "start:dev": "nodemon ./dist --exec 'DEBUG=app* babel-node src/' -w ./src",
+    "build": "redrun clean babel",
+    "clean": "del ./dist",
+    "babel": "babel --source-maps --copy-files -d dist/ src/",
+    "release:patch": "npm test && npm version patch && git push origin --tags && git push origin HEAD",
+    "release:minor": "npm test && npm version minor && git push origin --tags && git push origin HEAD",
+    "release:major": "npm test && npm version major && git push origin --tags && git push origin HEAD"
+  },
+  "ava": {
+    "babel": "inherit",
+    "require": [
+      "babel-polyfill",
+      "babel-register"
+    ],
+    "concurrency": 10,
+    "failWithoutAssertions": false
+  },
   "dependencies": {
-    "body-parser": "^1.17.2",
-    "express": "^4.15.3"
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "bluebird": "^3.4.6",
+    "body-parser": "1.15.2",
+    "compression": "1.6.2",
+    "cors": "2.8.1",
+    "debug": "^2.6.1",
+    "express-correlation-id": "^1.0.2",
+    "express-winston": "^2.3.0",
+    "feathers": "2.0.2",
+    "feathers-configuration": "0.3.3",
+    "feathers-errors": "2.4.0",
+    "feathers-hooks": "1.6.1",
+    "feathers-mongoose": "^5.0.3",
+    "feathers-rest": "1.5.1",
+    "lodash": "4.16.6",
+    "mongoose": "^4.9.2",
+    "mongoose-gen": "^2.1.1",
+    "mongoose-hidden": "^1.2.0",
+    "serve-favicon": "2.3.0",
+    "winston": "2.3.0"
+  },
+  "devDependencies": {
+    "ava": "0.19.1",
+    "babel-cli": "^6.18.0",
+    "babel-eslint": "6.0.4",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-es2016": "^6.16.0",
+    "babel-preset-es2017": "^6.16.0",
+    "chai": "3.5.0",
+    "del-cli": "0.2.0",
+    "eslint": "^3.16.1",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.0",
+    "nodemon": "^1.11.0",
+    "nyc": "^9.0.1",
+    "redrun": "5.9.6",
+    "supertest": "^2.0.1",
+    "supertest-promised": "^1.0.0"
   }
 }
