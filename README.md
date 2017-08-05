@@ -37,7 +37,7 @@ Then, execute the following command in the project folder:
 - `ENV=local BUILD=1 ./deploy`
 
 It will spin up mongo and api docker containers on your local machine.    
-API will be available by http://localhost:3000
+API will be available by http://localhost:3000   
 Also, there will be available swagger API documentation by http://localhost:3030
 
 ## Run tests with Docker
