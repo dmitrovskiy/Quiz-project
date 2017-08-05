@@ -1,7 +1,7 @@
 {
   "name": "api-quiz-project",
   "description": "Quiz Project API",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "src/",
   "keywords": [
     "feathers",
