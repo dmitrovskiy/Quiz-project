@@ -11,7 +11,7 @@ Perform next actions in the project folder:
 
 After this the APP will listen 3000 port on your local machine. I.e http://localhost:3000
 
-## Routes
+## Routes & features
 
 - GET - `/orders` get all orders
 - GET - `/orders?companyName={company_name}` - get all orders with specific companyName
